@@ -2,29 +2,55 @@
 <html>
 <body>
 
-<h2>To-Do List</h2>
+<h2>Registration Form</h2>
 
-<input id="task" placeholder="Enter task">
-<button onclick="addTask()">Add</button>
+<form onsubmit="return validateForm()">
 
-<ul id="list"></ul>
+    Name: <input type="text" id="name"><br><br>
+
+    Email: <input type="text" id="email"><br><br>
+
+    Phone: <input type="text" id="phone"><br><br>
+
+    Password: <input type="password" id="password"><br><br>
+
+    <button type="submit">Register</button>
+
+</form>
 
 <script>
-function addTask() {
-    let task = document.getElementById("task").value;
+function validateForm() {
 
-    if (task == "") {
-        alert("Enter a task");
-        return;
+    let name = document.getElementById("name").value;
+    let email = document.getElementById("email").value;
+    let phone = document.getElementById("phone").value;
+    let password = document.getElementById("password").value;
+
+    let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    let phonePattern = /^[6-9]\d{9}$/;
+
+    if (name == "") {
+        alert("Enter your name");
+        return false;
     }
 
-    let li = document.createElement("li");
-    li.innerHTML = task + 
-        ' <button onclick="this.parentElement.remove()">Delete</button>';
+    if (!emailPattern.test(email)) {
+        alert("Enter valid email");
+        return false;
+    }
 
-    document.getElementById("list").appendChild(li);
+    if (!phonePattern.test(phone)) {
+        alert("Enter valid 10 digit phone number");
+        return false;
+    }
 
-    document.getElementById("task").value = "";
+    if (password.length < 6) {
+        alert("Password must contain at least 6 characters");
+        return false;
+    }
+
+    alert("Registration Successful!");
+    return true;
 }
 </script>
 
